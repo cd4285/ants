@@ -1,6 +1,6 @@
 package org.polytechtours.javaperformance.tp.paintingants;
 
-/*
+/**
  * CColonie.java
  *
  * Created on 11 avril 2007, 16:35
@@ -13,36 +13,41 @@ import java.util.Vector;
 
 public class CColonie implements Runnable {
 
-  private Boolean mContinue = Boolean.TRUE;
-  private Vector<CFourmi> mColonie;
-  private PaintingAnts mApplis;
+	private Boolean mContinue = Boolean.TRUE;
+	// vecteur contenant des fourmis
+	private Vector<CFourmi> mColonie;
+	private PaintingAnts mApplis;
 
-  /** Creates a new instance of CColonie */
-  public CColonie(Vector<CFourmi> pColonie, PaintingAnts pApplis) {
-    mColonie = pColonie;
-    mApplis = pApplis;
-  }
+	/** Creates a new instance of CColonie */
+	public CColonie(Vector<CFourmi> pColonie, PaintingAnts pApplis) {
+		mColonie = pColonie;
+		mApplis = pApplis;
+	}
 
-  public void pleaseStop() {
-    mContinue = false;
-  }
+	/**
+	 * fonction pour arreter
+	 */
+	public void pleaseStop() {
+		mContinue = false;
+	}
 
-  @Override
-  public void run() {
+	@Override
+	public void run() {
 
-    while (mContinue == true) {
-      if (!mApplis.getPause()) {
-        for (int i = 0; i < mColonie.size(); i++) {
-          mColonie.get(i).deplacer();
-          mApplis.compteur();
-        }
-      } else {
-        /*
-         * try { Thread.sleep(100); } catch (InterruptedException e) { break; }
-         */
+		while (mContinue == true) {
+			if (!mApplis.getPause()) {
+				//boucle sur la taille de la colonie (nombre de fourmis dans la colonie)
+				for (int i = 0; i < mColonie.size(); i++) {
+					mColonie.get(i).deplacer();
+					mApplis.compteur();
+				}
+			} else {
+				/*
+				 * try { Thread.sleep(100); } catch (InterruptedException e) { break; }
+				 */
 
-      }
-    }
-  }
+			}
+		}
+	}
 
 }
