@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.util.Random;
 
 public class CFourmi {
-	// Tableau des incrémentations à effectuer sur la position des fourmis
+	// Tableau des incrémentations à effectuer sur la position des fourmis (coordonnees x et y d'où la dimension 2)
 	// en fonction de la direction du deplacement
 	static private int[][] mIncDirection = new int[8][2];
 	// le generateur aléatoire (Random est thread safe donc on la partage)
@@ -26,7 +26,7 @@ public class CFourmi {
 	// Taille de la trace de phéromones déposée par la fourmi
 	private int mTaille;
 	// Pas d'incrémentation des directions suivant le nombre de directions
-	// allouées à la fourmies
+	// allouées à la fourmies (permet de "tourner" d'un certain angle)
 	private int mDecalDir;
 	// l'applet
 	private PaintingAnts mApplis;
@@ -119,6 +119,7 @@ public class CFourmi {
 		} else {
 			lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
 		}
+		// si lCouleur est égale à la couleur suivie
 		if (testCouleur(lCouleur)) {
 			dir[0] = 1;
 		}
@@ -130,6 +131,7 @@ public class CFourmi {
 		} else {
 			lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
 		}
+		// si lCouleur est égale à la couleur suivie
 		if (testCouleur(lCouleur)) {
 			dir[1] = 1;
 		}
@@ -146,7 +148,7 @@ public class CFourmi {
 
 		// tirage d'un nombre aléatoire permettant de savoir si la fourmi va suivre
 		// ou non la couleur
-		tirage = GenerateurAleatoire.nextFloat();// Math.random();
+		tirage = GenerateurAleatoire.nextFloat();// Math.random(); // nextFloat : valeur entre 0 et 1
 
 		// la fourmi suit la couleur
 		if (((tirage <= mProba[3]) && ((dir[0] + dir[1] + dir[2]) > 0)) || ((dir[0] + dir[1] + dir[2]) == 3)) {
@@ -166,12 +168,14 @@ public class CFourmi {
 		prob3 = prob3 / total + prob2;
 
 		// incrémentation de la direction de la fourmi selon la direction choisie
-		tirage = GenerateurAleatoire.nextFloat();// Math.random();
+		tirage = GenerateurAleatoire.nextFloat();// Math.random(); // nextFloat : valeur entre 0 et 1
+		// on va à gauche
 		if (tirage < prob1) {
 			mDirection = modulo(mDirection - mDecalDir, 8);
 		} else {
 			if (tirage < prob2) {
 				/* rien, on va tout droit */
+			// on va à droite
 			} else {
 				mDirection = modulo(mDirection + mDecalDir, 8);
 			}
@@ -180,6 +184,7 @@ public class CFourmi {
 		x += CFourmi.mIncDirection[mDirection][0];
 		y += CFourmi.mIncDirection[mDirection][1];
 
+		// gestion sortie de l'écran
 		x = modulo(x, mPainting.getLargeur());
 		y = modulo(y, mPainting.getHauteur());
 

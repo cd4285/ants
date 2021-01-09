@@ -46,9 +46,9 @@ public class CPainting extends Canvas implements MouseListener {
   // pixel du canvas, ce qui est necessaire au deplacemet des fourmi
   // il sert aussi pour la fonction paint du Canvas
   private Color[][] mCouleurs;
-  // couleur du fond
+  // couleur du fond (blanc)
   private Color mCouleurFond = new Color(255, 255, 255);
-  // dimensions
+  // dimensions de la fenêtre
   private Dimension mDimension = new Dimension();
 
   private PaintingAnts mApplis;
@@ -65,11 +65,13 @@ public class CPainting extends Canvas implements MouseListener {
     mApplis = pApplis;
 
     mDimension = pDimension;
+    // dimensionnement de la fenêtre, les coordonnées 0 0 correspondent à en haut à gauche
     setBounds(new Rectangle(0, 0, mDimension.width, mDimension.height));
 
+    // couleur de fond de la fenêtre
     this.setBackground(mCouleurFond);
 
-    // initialisation de la matrice des couleurs
+    // initialisation de la matrice des couleurs de taille les dimensions de la fenêtre
     mCouleurs = new Color[mDimension.width][mDimension.height];
     synchronized (mMutexCouleurs) {
       for (i = 0; i != mDimension.width; i++) {
@@ -108,7 +110,7 @@ public class CPainting extends Canvas implements MouseListener {
   }
 
   /******************************************************************************
-   * Titre : Color getLargeur Description : Cette fonction renvoie la hauteur de
+   * Titre : Color getLargeur Description : Cette fonction renvoie la largeur de
    * la peinture
    ******************************************************************************/
   public int getLargeur() {
@@ -305,7 +307,7 @@ public class CPainting extends Canvas implements MouseListener {
 
   /******************************************************************************
    * Titre : void colorer_case(int x, int y, Color c) Description : Cette
-   * fonction va colorer le pixel correspondant et mettre a jour le tabmleau des
+   * fonction va colorer le pixel correspondant et mettre a jour le tableau des
    * couleurs
    ******************************************************************************/
   public void setCouleur(int x, int y, Color c, int pTaille) {

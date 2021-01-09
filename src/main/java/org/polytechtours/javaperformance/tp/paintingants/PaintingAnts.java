@@ -32,7 +32,8 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
   private long mCompteur = 0;
   private Object mMutexCompteur = new Object();
   private boolean mPause = false;
-
+  
+  // tableau rectangulaire de pixels
   public BufferedImage mBaseImage;
   private Timer fpsTimer;
 
