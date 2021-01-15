@@ -110,7 +110,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
    *
    */
   @Override
-  public void init() {
+	public void init() {
     URL lFileName;
     URLClassLoader urlLoader = (URLClassLoader) this.getClass().getClassLoader();
 

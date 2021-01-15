@@ -36,7 +36,7 @@ public class CColonie implements Runnable {
 
 		while (mContinue == true) {
 			if (!mApplis.getPause()) {
-				//boucle sur la taille de la colonie (nombre de fourmis dans la colonie)
+				// boucle sur la taille de la colonie (nombre de fourmis dans la colonie)
 				for (int i = 0; i < mColonie.size(); i++) {
 					mColonie.get(i).deplacer();
 					mApplis.compteur();

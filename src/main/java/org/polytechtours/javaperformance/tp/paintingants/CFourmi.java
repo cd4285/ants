@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.util.Random;
 
 public class CFourmi {
-	// Tableau des incrémentations à effectuer sur la position des fourmis (coordonnees x et y d'où la dimension 2)
+	// Tableau des incrémentations à effectuer sur la position des fourmis
+	// (coordonnees x et y d'où la dimension 2)
 	// en fonction de la direction du deplacement
 	static private int[][] mIncDirection = new int[8][2];
 	// le generateur aléatoire (Random est thread safe donc on la partage)
@@ -35,10 +36,13 @@ public class CFourmi {
 	// nombre de déplacements de la fourmi
 	private long mNbDeplacements;
 
-	/** Constructeur de CFourmi
-	 * @param pCouleurSuivie n'est pas utilisé (peut etre remplacer pCouleurDeposee par pCouleurSuivie dans la ligne mLuminance ...)
-	 * @param pInit_x et pInit_y ne sont pas utilisés
-	*/
+	/**
+	 * Constructeur de CFourmi
+	 * 
+	 * @param pCouleurSuivie n'est pas utilisé (peut etre remplacer pCouleurDeposee
+	 *                       par pCouleurSuivie dans la ligne mLuminance ...)
+	 * @param pInit_x        et pInit_y ne sont pas utilisés
+	 */
 	public CFourmi(Color pCouleurDeposee, Color pCouleurSuivie, float pProbaTD, float pProbaG, float pProbaD,
 			float pProbaSuivre, CPainting pPainting, char pTypeDeplacement, float pInit_x, float pInit_y,
 			int pInitDirection, int pTaille, float pSeuilLuminance, PaintingAnts pApplis) {
@@ -97,7 +101,7 @@ public class CFourmi {
 	 */
 	public synchronized void deplacer() {
 		float tirage, prob1, prob2, prob3, total;
-		//tableau de taille 3
+		// tableau de taille 3
 		int[] dir = new int[3];
 		int i, j;
 		Color lCouleur;
@@ -175,7 +179,7 @@ public class CFourmi {
 		} else {
 			if (tirage < prob2) {
 				/* rien, on va tout droit */
-			// on va à droite
+				// on va à droite
 			} else {
 				mDirection = modulo(mDirection + mDecalDir, 8);
 			}
@@ -222,7 +226,7 @@ public class CFourmi {
 	 *
 	 * @return int
 	 */
-	private int modulo(int x, int m) {
+	/* private */public int modulo(int x, int m) {
 		return (x + m) % m;
 	}
 
@@ -231,7 +235,7 @@ public class CFourmi {
 	 * couleur avec la couleur suivie
 	 *
 	 */
-	private boolean testCouleur(Color pCouleur) {
+	/* private */public boolean testCouleur(Color pCouleur) {
 		boolean lReponse = false;
 		float lLuminance;
 
