@@ -5,12 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class CFourmiTest {
 
@@ -72,17 +74,22 @@ class CFourmiTest {
 	public void testDeplacer() {
 		PaintingAnts pApplis = new PaintingAnts();
 		CPainting mPainting = new CPainting(new Dimension(400, 500), pApplis);
-		// mPainting.init();
-		Canvas can = new Canvas();
-		mPainting.setmGraphics(can.getGraphics());
-		CFourmi fourmi = new CFourmi(new Color(255, 255, 255), new Color(0, 0, 0), 0, 0, 0, 0, mPainting, 'd', 0, 0, 0,
-				0, 40, pApplis);
+		
+		Graphics gMock = Mockito.mock(Graphics.class);
+		mPainting.setmGraphics(gMock);
+		
+		CFourmi fourmi = new CFourmi(new Color(255, 255, 255), new Color(0, 0, 0), 0.45f, 0.53f, 0.65f, 0.76f, mPainting, 'd', 0, 0, 2,
+				3, 40, pApplis);
 
 		assertEquals(0, fourmi.getNbDeplacements()); // test nombre de déplacement
-
+		assertEquals(0, fourmi.getX()); // test coordonnees fourmi
+		assertEquals(0, fourmi.getY()); // test coordonnees fourmi
+		
 		fourmi.deplacer();
 
 		assertEquals(1, fourmi.getNbDeplacements()); // test nombre de déplacement
+		//assertThat(fourmi.getX(), anyOf(is("O"), is("1")));
+		assertEquals(0, fourmi.getY()); // test coordonnees fourmi
 	}
 
 }
