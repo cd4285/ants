@@ -1,12 +1,16 @@
 package org.polytechtours.javaperformance.tp.paintingants;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.hamcrest.MatcherAssert.assertThat; 
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -85,11 +89,14 @@ class CFourmiTest {
 		assertEquals(0, fourmi.getX()); // test coordonnees fourmi
 		assertEquals(0, fourmi.getY()); // test coordonnees fourmi
 		
+		int coordX = fourmi.getX();
+		int coordY = fourmi.getY();
+		
 		fourmi.deplacer();
 
 		assertEquals(1, fourmi.getNbDeplacements()); // test nombre de déplacement
-		//assertThat(fourmi.getX(), anyOf(is("O"), is("1")));
-		assertEquals(0, fourmi.getY()); // test coordonnees fourmi
+		assertThat(fourmi.getX(), anyOf(is(coordX % 500), is((coordX + 1) % 500))); // test coordonnees fourmi
+		assertThat(fourmi.getY(), anyOf(is(coordY % 500), is((coordY + 1) % 500))); // test coordonnees fourmi
 	}
 
 }
