@@ -437,4 +437,14 @@ public class CPainting extends Canvas implements MouseListener {
 		this.mGraphics = mGraphics;
 	}
 
+	public Color[][] getmCouleurs() {
+		return mCouleurs;
+	}
+
+	public boolean ismSuspendu() {
+		return mSuspendu;
+	}
+	
+	
+
 }

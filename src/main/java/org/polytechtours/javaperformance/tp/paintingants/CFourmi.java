@@ -250,4 +250,10 @@ public class CFourmi {
 
 		return lReponse;
 	}
+
+	public int getmDirection() {
+		return mDirection;
+	}
+	
+	
 }

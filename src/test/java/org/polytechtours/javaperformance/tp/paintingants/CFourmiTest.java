@@ -5,12 +5,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -88,15 +86,19 @@ class CFourmiTest {
 		assertEquals(0, fourmi.getNbDeplacements()); // test nombre de déplacement
 		assertEquals(0, fourmi.getX()); // test coordonnees fourmi
 		assertEquals(0, fourmi.getY()); // test coordonnees fourmi
+		assertEquals(2, fourmi.getmDirection()); // test direction de la fourmi
 		
 		int coordX = fourmi.getX();
 		int coordY = fourmi.getY();
+		int direction = fourmi.getmDirection();
 		
 		fourmi.deplacer();
 
 		assertEquals(1, fourmi.getNbDeplacements()); // test nombre de déplacement
-		assertThat(fourmi.getX(), anyOf(is(coordX % 500), is((coordX + 1) % 500))); // test coordonnees fourmi
-		assertThat(fourmi.getY(), anyOf(is(coordY % 500), is((coordY + 1) % 500))); // test coordonnees fourmi
+		assertThat(fourmi.getX(), anyOf(is(fourmi.modulo(coordX, 500)), is(fourmi.modulo(coordX + 1, 500)))); // test coordonnees fourmi
+		assertThat(fourmi.getY(), anyOf(is(fourmi.modulo(coordY, 500)), is(fourmi.modulo(coordY + 1, 500)), is(fourmi.modulo(coordY - 1, 500)))); // test coordonnees fourmi
+		assertThat(fourmi.getmDirection(), anyOf(is(direction - 2), is(direction), is(direction + 2))); //test direction de la fourmi
+	
 	}
 
 }
