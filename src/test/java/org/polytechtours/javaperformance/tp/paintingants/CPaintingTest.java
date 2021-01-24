@@ -2,8 +2,10 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import org.junit.jupiter.api.AfterAll;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class CPaintingTest {
 
@@ -55,6 +58,21 @@ class CPaintingTest {
 		painting.suspendre();
 		
 		assertEquals(true, painting.ismSuspendu());
+	}
+	
+	@Test
+	public void testSetCouleur() {
+		PaintingAnts pApplis = new PaintingAnts();
+		CPainting painting = new CPainting(new Dimension(400, 500), pApplis);
+		
+		Graphics gMock = Mockito.mock(Graphics.class);
+		painting.setmGraphics(gMock);
+		
+		assertEquals(new Color(255, 255, 255), painting.getmCouleurs()[0][0]);
+		
+		painting.setCouleur(0, 0, new Color(0, 0, 0), 0);
+		
+		assertEquals(new Color(0, 0, 0), painting.getmCouleurs()[0][0]);
 	}
 
 }
