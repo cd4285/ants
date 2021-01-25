@@ -183,7 +183,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	// si pStr est un nombre : sa valeur est retournée
 	// si pStr est un interval x..y : une valeur au hasard dans [x,y] est
 	// retournée
-	private float readFloatParameter(String pStr) {
+	/*private*/public float readFloatParameter(String pStr) {
 		float lMin, lMax, lResult;
 		// System.out.println(" chaine pStr: "+pStr);
 		StringTokenizer lStrTok = new StringTokenizer(pStr, ":");
@@ -211,7 +211,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	// si pStr est un nombre : sa valeur est retournée
 	// si pStr est un interval x..y : une valeur au hasard dans [x,y] est
 	// retournée
-	private int readIntParameter(String pStr) {
+	/*private*/public int readIntParameter(String pStr) {
 		int lMin, lMax, lResult;
 		StringTokenizer lStrTok = new StringTokenizer(pStr, ":");
 		// on lit une premiere valeur
@@ -233,7 +233,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 
 	// =========================================================================
 	// lecture des paramètres de l'applet
-	private void readParameterFourmis() {
+	/*private*/public void readParameterFourmis() {
 		String lChaine;
 		int R, G, B;
 		Color lCouleurDeposee, lCouleurSuivie;
@@ -548,7 +548,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	/**
 	 * update Fourmis per second
 	 */
-	private synchronized void updateFPS() {
+	/*private*/public synchronized void updateFPS() {
 		lastFps = fpsCounter;
 		fpsCounter = 0L;
 	}
@@ -559,6 +559,42 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 
 	public Long getFpsCounter() {
 		return fpsCounter;
+	}
+
+	public Long getLastFps() {
+		return lastFps;
+	}
+
+	public void setFpsCounter(Long fpsCounter) {
+		this.fpsCounter = fpsCounter;
+	}
+
+	public void setLastFps(Long lastFps) {
+		this.lastFps = lastFps;
+	}
+
+	public int getmLargeur() {
+		return mLargeur;
+	}
+
+	public int getmHauteur() {
+		return mHauteur;
+	}
+
+	public BufferedImage getmBaseImage() {
+		return mBaseImage;
+	}
+
+	public boolean ismPause() {
+		return mPause;
+	}
+
+	public Thread getmApplis() {
+		return mApplis;
+	}
+
+	public Thread getmThreadColony() {
+		return mThreadColony;
 	}
 	
 	
