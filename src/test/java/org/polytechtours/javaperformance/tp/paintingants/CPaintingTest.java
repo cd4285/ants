@@ -16,9 +16,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class CPaintingTest {
+	private static PaintingAnts pApplis;
+	private static CPainting painting;
+	private static Graphics gMock;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
+		pApplis = new PaintingAnts();
+		painting = new CPainting(new Dimension(400, 500), pApplis);
+		
+		gMock = Mockito.mock(Graphics.class);
+		painting.setmGraphics(gMock);
 	}
 
 	@AfterAll
@@ -34,12 +42,12 @@ class CPaintingTest {
 	}
 
 	@Test
-	public void testCPainting() {
-		PaintingAnts pApplis = new PaintingAnts();
-		CPainting painting = new CPainting(new Dimension(400, 500), pApplis);
-		
+	public void testCPaintingDimensions() {	
 		assertEquals(new Rectangle(0, 0, 400, 500), painting.getBounds());
+	}
 	
+	@Test
+	public void testCPaintingCouleur() {
 		// test couleur de fond
 		for (int i = 0; i != painting.getDimension().width; i++) {
 			for (int j = 0; j != painting.getDimension().height; j++) {
@@ -50,9 +58,6 @@ class CPaintingTest {
 	
 	@Test
 	public void testSuspendre() {
-		PaintingAnts pApplis = new PaintingAnts();
-		CPainting painting = new CPainting(new Dimension(400, 500), pApplis);
-		
 		assertEquals(false, painting.ismSuspendu());
 		
 		painting.suspendre();
@@ -62,12 +67,6 @@ class CPaintingTest {
 	
 	@Test
 	public void testSetCouleur() {
-		PaintingAnts pApplis = new PaintingAnts();
-		CPainting painting = new CPainting(new Dimension(400, 500), pApplis);
-		
-		Graphics gMock = Mockito.mock(Graphics.class);
-		painting.setmGraphics(gMock);
-		
 		assertEquals(new Color(255, 255, 255), painting.getmCouleurs()[0][0]);
 		
 		painting.setCouleur(0, 0, new Color(0, 0, 0), 0);
