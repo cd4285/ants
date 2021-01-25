@@ -103,7 +103,7 @@ class PaintingAntsTest {
 	
 	@Test
 	void testReadFloatParameterIntervalAvecDeuxièmeChiffreSuperieurAuPremier() {
-		assertThat(pApplis.readFloatParameter(param4), anyOf(is(3.0), is(7.8), is(allOf(greaterThan(3.0f), lessThan(7.8f)))));
+		assertThat(pApplis.readFloatParameter(param4), anyOf(is(3.0f), is(7.8f), is(allOf(greaterThan(3.0f), lessThan(7.8f)))));
 	}
 
 	@Test
