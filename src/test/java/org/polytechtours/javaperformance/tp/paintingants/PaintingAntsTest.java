@@ -15,11 +15,6 @@ class PaintingAntsTest {
 	private static PaintingAnts pApplis;
 	private static String[][] lInfo;
 	private static String[][] l1;
-	private static String param1;
-	private static String param2; 
-	private static String param3;
-	private static String param4;
-	private static String param5;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -30,12 +25,6 @@ class PaintingAntsTest {
 		l1 = new String[][] { { "SeuilLuminance", "string", "Seuil de luminance" },
 				{ "Img", "string", "Image" }, { "NbFourmis", "string", "Nombre de fourmis" }, { "Fourmis", "string",
 						"Paramètres des fourmis (RGB_déposée)(RGB_suivie)(x,y,direction,taille)(TypeDeplacement,ProbaG,ProbaTD,ProbaD,ProbaSuivre);...;" } };
-	
-		param1 = "3";
-		param2 = "3:1";
-		param3 = "3:-4";
-		param4 = "3:7.8";
-		param5 = "3:7";
 	}
 
 	@AfterAll
@@ -84,46 +73,6 @@ class PaintingAntsTest {
 		pApplis.pause();
 
 		assertEquals(true, pApplis.ismPause());
-	}
-
-	@Test
-	void testReadFloatParameterAvecUnSeulChiffre() {
-		assertEquals(3, pApplis.readFloatParameter(param1));
-	}
-	
-	@Test
-	void testReadFloatParameterIntervalleAvecDeuxièmeChiffreInferieurAuPremier() {
-		assertEquals(3, pApplis.readFloatParameter(param2));
-	}
-	
-	@Test
-	void testReadFloatParameterIntervalleAvecDeuxièmeChiffreNegatifInferieurAuPremier() {
-		assertEquals(3, pApplis.readFloatParameter(param3));
-	}
-	
-	@Test
-	void testReadFloatParameterIntervalAvecDeuxièmeChiffreSuperieurAuPremier() {
-		assertThat(pApplis.readFloatParameter(param4), anyOf(is(3.0f), is(7.8f), is(allOf(greaterThan(3.0f), lessThan(7.8f)))));
-	}
-
-	@Test
-	void testReadIntParameterAvecUnSeulChiffre() {		
-		assertEquals(3, pApplis.readIntParameter(param1));
-	}
-	
-	@Test
-	void testReadIntParameterIntervalleAvecDeuxièmeChiffreInferieurAuPremier() {
-		assertEquals(3, pApplis.readIntParameter(param2));
-	}
-	
-	@Test
-	void testReadIntParameterIntervalleAvecDeuxièmeChiffreNegatifInferieurAuPremier() {
-		assertEquals(3, pApplis.readIntParameter(param3));
-	}
-	
-	@Test
-	void testReadIntParameterIntervalAvecDeuxièmeChiffreSuperieurAuPremier() {
-		assertThat(pApplis.readIntParameter(param5), anyOf(is(3), is(7), is(allOf(greaterThan(3), lessThan(7)))));
 	}
 
 	@Test

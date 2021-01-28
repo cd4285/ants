@@ -35,6 +35,8 @@ public class CFourmi {
 	private float mSeuilLuminance;
 	// nombre de déplacements de la fourmi
 	private long mNbDeplacements;
+	//outil for modulo and testcouleur
+	private static COutil outil;
 
 	/**
 	 * Constructeur de CFourmi
@@ -46,7 +48,7 @@ public class CFourmi {
 	public CFourmi(Color pCouleurDeposee, Color pCouleurSuivie, float pProbaTD, float pProbaG, float pProbaD,
 			float pProbaSuivre, CPainting pPainting, char pTypeDeplacement, float pInit_x, float pInit_y,
 			int pInitDirection, int pTaille, float pSeuilLuminance, PaintingAnts pApplis) {
-
+		System.out.println(pApplis);
 		mCouleurDeposee = pCouleurDeposee;
 		mLuminanceCouleurSuivie = 0.2426f * pCouleurDeposee.getRed() + 0.7152f * pCouleurDeposee.getGreen()
 				+ 0.0722f * pCouleurDeposee.getBlue();
@@ -93,6 +95,7 @@ public class CFourmi {
 
 		mSeuilLuminance = pSeuilLuminance;
 		mNbDeplacements = 0;
+		outil = new COutil();
 	}
 
 	/*************************************************************************************************
@@ -116,37 +119,37 @@ public class CFourmi {
 		// le tableau dir contient 0 si la direction concernée ne contient pas la
 		// couleur
 		// à suivre, et 1 sinon (dir[0]=gauche, dir[1]=tt_droit, dir[2]=droite)
-		i = modulo(x + CFourmi.mIncDirection[modulo(mDirection - mDecalDir, 8)][0], mPainting.getLargeur());
-		j = modulo(y + CFourmi.mIncDirection[modulo(mDirection - mDecalDir, 8)][1], mPainting.getHauteur());
+		i = outil.modulo(x + CFourmi.mIncDirection[outil.modulo(mDirection - mDecalDir, 8)][0], mPainting.getLargeur());
+		j = outil.modulo(y + CFourmi.mIncDirection[outil.modulo(mDirection - mDecalDir, 8)][1], mPainting.getHauteur());
 		if (mApplis.mBaseImage != null) {
 			lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
 		} else {
 			lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
 		}
 		// si lCouleur est égale à la couleur suivie
-		if (testCouleur(lCouleur)) {
+		if (outil.testCouleur(lCouleur, mLuminanceCouleurSuivie, mSeuilLuminance)) {
 			dir[0] = 1;
 		}
 
-		i = modulo(x + CFourmi.mIncDirection[mDirection][0], mPainting.getLargeur());
-		j = modulo(y + CFourmi.mIncDirection[mDirection][1], mPainting.getHauteur());
+		i = outil.modulo(x + CFourmi.mIncDirection[mDirection][0], mPainting.getLargeur());
+		j = outil.modulo(y + CFourmi.mIncDirection[mDirection][1], mPainting.getHauteur());
 		if (mApplis.mBaseImage != null) {
 			lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
 		} else {
 			lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
 		}
 		// si lCouleur est égale à la couleur suivie
-		if (testCouleur(lCouleur)) {
+		if (outil.testCouleur(lCouleur, mLuminanceCouleurSuivie, mSeuilLuminance)) {
 			dir[1] = 1;
 		}
-		i = modulo(x + CFourmi.mIncDirection[modulo(mDirection + mDecalDir, 8)][0], mPainting.getLargeur());
-		j = modulo(y + CFourmi.mIncDirection[modulo(mDirection + mDecalDir, 8)][1], mPainting.getHauteur());
+		i = outil.modulo(x + CFourmi.mIncDirection[outil.modulo(mDirection + mDecalDir, 8)][0], mPainting.getLargeur());
+		j = outil.modulo(y + CFourmi.mIncDirection[outil.modulo(mDirection + mDecalDir, 8)][1], mPainting.getHauteur());
 		if (mApplis.mBaseImage != null) {
 			lCouleur = new Color(mApplis.mBaseImage.getRGB(i, j));
 		} else {
 			lCouleur = new Color(mPainting.getCouleur(i, j).getRGB());
 		}
-		if (testCouleur(lCouleur)) {
+		if (outil.testCouleur(lCouleur, mLuminanceCouleurSuivie, mSeuilLuminance)) {
 			dir[2] = 1;
 		}
 
@@ -175,13 +178,13 @@ public class CFourmi {
 		tirage = GenerateurAleatoire.nextFloat();// Math.random(); // nextFloat : valeur entre 0 et 1
 		// on va à gauche
 		if (tirage < prob1) {
-			mDirection = modulo(mDirection - mDecalDir, 8);
+			mDirection = outil.modulo(mDirection - mDecalDir, 8);
 		} else {
 			if (tirage < prob2) {
 				/* rien, on va tout droit */
 				// on va à droite
 			} else {
-				mDirection = modulo(mDirection + mDecalDir, 8);
+				mDirection = outil.modulo(mDirection + mDecalDir, 8);
 			}
 		}
 
@@ -189,8 +192,8 @@ public class CFourmi {
 		y += CFourmi.mIncDirection[mDirection][1];
 
 		// gestion sortie de l'écran
-		x = modulo(x, mPainting.getLargeur());
-		y = modulo(y, mPainting.getHauteur());
+		x = outil.modulo(x, mPainting.getLargeur());
+		y = outil.modulo(y, mPainting.getHauteur());
 
 		// coloration de la nouvelle position de la fourmi
 		mPainting.setCouleur(x, y, mCouleurDeposee, mTaille);
@@ -218,42 +221,21 @@ public class CFourmi {
 		return y;
 	}
 
-	/*************************************************************************************************
-	 * Titre : modulo Description : Fcontion de modulo permettant au fourmi de
-	 * reapparaitre de l autre coté du Canvas lorsque qu'elle sorte de ce dernier
-	 *
-	 * @param x valeur
-	 *
-	 * @return int
-	 */
-	/* private */public int modulo(int x, int m) {
-		return (x + m) % m;
-	}
-
-	/*************************************************************************************************
-	 * Titre : boolean testCouleur() Description : fonction testant l'égalité d'une
-	 * couleur avec la couleur suivie
-	 *
-	 */
-	/* private */public boolean testCouleur(Color pCouleur) {
-		boolean lReponse = false;
-		float lLuminance;
-
-		/* on calcule la luminance */
-		lLuminance = 0.2426f * pCouleur.getRed() + 0.7152f * pCouleur.getGreen() + 0.0722f * pCouleur.getBlue();
-
-		/* test */
-		if (Math.abs(mLuminanceCouleurSuivie - lLuminance) < mSeuilLuminance) {
-			lReponse = true;
-			// System.out.print(x);
-		}
-
-		return lReponse;
-	}
+	
 
 	public int getmDirection() {
 		return mDirection;
 	}
+
+	public float getmLuminanceCouleurSuivie() {
+		return mLuminanceCouleurSuivie;
+	}
+
+	public float getmSeuilLuminance() {
+		return mSeuilLuminance;
+	}
+	
+	
 	
 	
 }

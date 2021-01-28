@@ -22,8 +22,7 @@ class CFourmiTest {
 	private static CPainting mPainting;
 	private static Graphics gMock;
 	private static CFourmi fourmi;
-	private static Color pCouleurBlanc;
-	private static Color pCouleurNoir;
+	private static COutil outil;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,10 +32,7 @@ class CFourmiTest {
 		gMock = Mockito.mock(Graphics.class);
 		mPainting.setmGraphics(gMock);
 		
-		
-		
-		pCouleurBlanc = new Color(255, 255, 255); // blanc
-		pCouleurNoir = new Color(0, 0, 0); // noir
+		outil = new COutil();
 	}
 
 	@AfterAll
@@ -53,26 +49,7 @@ class CFourmiTest {
 	void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testTestCouleurEgaliteAvecCouleurSuivie() {
-		assertEquals(true, fourmi.testCouleur(pCouleurBlanc));
-	}
-
-	@Test
-	public void testTestCouleurPasEgaliteAvecCouleurSuivie() {
-		assertEquals(false, fourmi.testCouleur(pCouleurNoir));
-	}
 	
-	@Test
-	public void testModulo() {
-		assertEquals(3, fourmi.modulo(3, 5));
-		assertEquals(2, fourmi.modulo(30, 7));
-	}
-	
-	@Test
-	public void testModuloNombreNegatif() {
-		assertEquals(2, fourmi.modulo(-2, 4));
-	}
 	
 	@Test
 	public void testDeplacerNombreDeplacements() {
@@ -92,7 +69,7 @@ class CFourmiTest {
 
 		fourmi.deplacer();
 		
-		assertThat(fourmi.getX(), anyOf(is(fourmi.modulo(coordX, 500)), is(fourmi.modulo(coordX + 1, 500)))); // test coordonnees fourmi
+		assertThat(fourmi.getX(), anyOf(is(outil.modulo(coordX, 500)), is(outil.modulo(coordX + 1, 500)))); // test coordonnees fourmi
 	}
 	
 	@Test
@@ -103,7 +80,7 @@ class CFourmiTest {
 
 		fourmi.deplacer();
 
-		assertThat(fourmi.getY(), anyOf(is(fourmi.modulo(coordY, 500)), is(fourmi.modulo(coordY + 1, 500)), is(fourmi.modulo(coordY - 1, 500)))); // test coordonnees fourmi
+		assertThat(fourmi.getY(), anyOf(is(outil.modulo(coordY, 500)), is(outil.modulo(coordY + 1, 500)), is(outil.modulo(coordY - 1, 500)))); // test coordonnees fourmi
 	}
 
 	@Test

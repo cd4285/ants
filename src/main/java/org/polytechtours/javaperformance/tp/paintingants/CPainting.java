@@ -31,7 +31,7 @@ import java.awt.event.MouseListener;
  * @version 1.0
  */
 
-public class CPainting extends Canvas implements MouseListener {
+public class CPainting extends Canvas {
 	private static final long serialVersionUID = 1L;
 	// matrice servant pour le produit de convolution
 	static private float[][] mMatriceConv9 = new float[3][3];
@@ -54,13 +54,16 @@ public class CPainting extends Canvas implements MouseListener {
 	private PaintingAnts mApplis;
 
 	private boolean mSuspendu = false;
+	
+	private CSouris souris;
 
 	/******************************************************************************
 	 * Titre : public CPainting() Description : Constructeur de la classe
 	 ******************************************************************************/
 	public CPainting(Dimension pDimension, PaintingAnts pApplis) {
+		CSouris souris = new CSouris(this, pApplis);
 		int i, j;
-		addMouseListener(this);
+		addMouseListener(souris);
 
 		mApplis = pApplis;
 
@@ -249,45 +252,7 @@ public class CPainting extends Canvas implements MouseListener {
 		mSuspendu = false;
 	}
 
-	/****************************************************************************/
-	public void mouseClicked(MouseEvent pMouseEvent) {
-		pMouseEvent.consume();
-		if (pMouseEvent.getButton() == MouseEvent.BUTTON1) {
-			// double clic sur le bouton gauche = effacer et recommencer
-			if (pMouseEvent.getClickCount() == 2) {
-				init();
-			}
-			// simple clic = suspendre les calculs et l'affichage
-			mApplis.pause();
-		} else {
-			// bouton du milieu (roulette) = suspendre l'affichage mais
-			// continuer les calculs
-			if (pMouseEvent.getButton() == MouseEvent.BUTTON2) {
-				suspendre();
-			} else {
-				// clic bouton droit = effacer et recommencer
-				// case pMouseEvent.BUTTON3:
-				init();
-			}
-		}
-	}
-
-	/****************************************************************************/
-	public void mouseEntered(MouseEvent pMouseEvent) {
-	}
-
-	/****************************************************************************/
-	public void mouseExited(MouseEvent pMouseEvent) {
-	}
-
-	/****************************************************************************/
-	public void mousePressed(MouseEvent pMouseEvent) {
-
-	}
-
-	/****************************************************************************/
-	public void mouseReleased(MouseEvent pMouseEvent) {
-	}
+	
 
 	/******************************************************************************
 	 * Titre : void paint(Graphics g) Description : Surcharge de la fonction qui est
