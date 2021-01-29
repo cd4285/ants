@@ -4,15 +4,15 @@ package org.polytechtours.javaperformance.tp.paintingants;
 // version : 4.0
 
 import java.awt.Color;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CFourmi {
 	// Tableau des incrémentations à effectuer sur la position des fourmis
 	// (coordonnees x et y d'où la dimension 2)
 	// en fonction de la direction du deplacement
 	static private int[][] mIncDirection = new int[8][2];
-	// le generateur aléatoire (Random est thread safe donc on la partage)
-	private static Random GenerateurAleatoire = new Random();
+	// le generateur aléatoire (ThreadLocalRandom est thread safe donc on la partage)
+	private static ThreadLocalRandom GenerateurAleatoire = ThreadLocalRandom.current();
 	// couleur déposé par la fourmi
 	private Color mCouleurDeposee;
 	private float mLuminanceCouleurSuivie;
@@ -159,7 +159,7 @@ public class CFourmi {
 		// tirage d'un nombre aléatoire permettant de savoir si la fourmi va suivre
 		// ou non la couleur
 		tirage = GenerateurAleatoire.nextFloat();// Math.random(); // nextFloat : valeur entre 0 et 1
-
+		
 		// la fourmi suit la couleur
 		if (((tirage <= mProba[3]) && ((dir[0] + dir[1] + dir[2]) > 0)) || ((dir[0] + dir[1] + dir[2]) == 3)) {
 			prob1 = (dir[0]) * mProba[0];
