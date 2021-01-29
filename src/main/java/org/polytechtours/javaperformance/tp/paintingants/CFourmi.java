@@ -50,8 +50,8 @@ public class CFourmi {
 			int pInitDirection, int pTaille, float pSeuilLuminance, PaintingAnts pApplis) {
 		System.out.println(pApplis);
 		mCouleurDeposee = pCouleurDeposee;
-		mLuminanceCouleurSuivie = 0.2426f * pCouleurDeposee.getRed() + 0.7152f * pCouleurDeposee.getGreen()
-				+ 0.0722f * pCouleurDeposee.getBlue();
+		mLuminanceCouleurSuivie = 0.2426f * pCouleurSuivie.getRed() + 0.7152f * pCouleurSuivie.getGreen()
+				+ 0.0722f * pCouleurSuivie.getBlue();
 		mPainting = pPainting;
 		mApplis = pApplis;
 
@@ -96,6 +96,9 @@ public class CFourmi {
 		mSeuilLuminance = pSeuilLuminance;
 		mNbDeplacements = 0;
 		outil = new COutil();
+		
+		x = (int) pInit_x;
+		y = (int) pInit_y;
 	}
 
 	/*************************************************************************************************
