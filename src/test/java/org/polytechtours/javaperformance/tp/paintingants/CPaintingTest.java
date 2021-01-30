@@ -2,7 +2,6 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,6 +14,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+/**
+ * classe test CPainting
+ * 
+ *
+ */
 class CPaintingTest {
 	private static PaintingAnts pApplis;
 	private static CPainting painting;

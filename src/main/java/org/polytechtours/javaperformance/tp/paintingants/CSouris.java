@@ -1,9 +1,13 @@
 package org.polytechtours.javaperformance.tp.paintingants;
 
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * classe qui gère les actions de la souris
+ * 
+ *
+ */
 public class CSouris implements MouseListener {
 	
 	private PaintingAnts mApplis;

@@ -2,6 +2,11 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import java.awt.Color;
 
+/**
+ * classe qui contient quelques fonctions utiles
+ * 
+ *
+ */
 public class COutil {
 	
 	
@@ -13,7 +18,7 @@ public class COutil {
 	 *
 	 * @return int
 	 */
-	/* private */public int modulo(int x, int m) {
+	public int modulo(int x, int m) {
 		return (x + m) % m;
 	}
 
@@ -22,7 +27,7 @@ public class COutil {
 	 * couleur avec la couleur suivie
 	 *
 	 */
-	/* private */public boolean testCouleur(Color pCouleur, float mLuminanceCouleurSuivie, float mSeuilLuminance) {
+	public boolean testCouleur(Color pCouleur, float mLuminanceCouleurSuivie, float mSeuilLuminance) {
 		boolean lReponse = false;
 		float lLuminance;
 

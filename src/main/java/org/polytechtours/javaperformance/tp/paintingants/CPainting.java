@@ -46,7 +46,7 @@ public class CPainting extends Canvas {
 	// pixel du canvas, ce qui est necessaire au deplacemet des fourmi
 	// il sert aussi pour la fonction paint du Canvas
 	private Color[][] mCouleurs;
-	// couleur du fond (blanc)
+	// couleur du fond
 	private Color mCouleurFond = new Color(255, 255, 255);
 	// dimensions de la fenêtre
 	private Dimension mDimension = new Dimension();
@@ -54,7 +54,7 @@ public class CPainting extends Canvas {
 	private PaintingAnts mApplis;
 
 	private boolean mSuspendu = false;
-	
+	// objet pour gérer les actions de la souris
 	private CSouris souris;
 
 	/******************************************************************************

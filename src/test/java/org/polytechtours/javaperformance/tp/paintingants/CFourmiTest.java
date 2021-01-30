@@ -16,6 +16,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+/**
+ * classe test CFourmi
+ * 
+ *
+ */
 class CFourmiTest {
 	
 	private static PaintingAnts pApplis;

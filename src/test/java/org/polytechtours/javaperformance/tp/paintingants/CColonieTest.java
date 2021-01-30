@@ -12,6 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * 
+ * classe test de CColonie
+ *
+ */
 class CColonieTest {
 	
 	private static PaintingAnts pApplis;

@@ -1,6 +1,5 @@
 package org.polytechtours.javaperformance.tp.paintingants;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -283,7 +282,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	/**
 	 * update Fourmis per second
 	 */
-	/*private*/public synchronized void updateFPS() {
+	public synchronized void updateFPS() {
 		lastFps = fpsCounter;
 		fpsCounter = 0L;
 	}

@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
+/**
+ * classe test PaintingAnts
+ * 
+ *
+ */
 class PaintingAntsTest {
 	private static PaintingAnts pApplis;
 	private static String[][] lInfo;

@@ -5,7 +5,11 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
-
+/**
+ * classe qui gère la création et le déplacement des fourmis
+ *
+ *
+ */
 public class CFourmi {
 	// Tableau des incrémentations à effectuer sur la position des fourmis
 	// (coordonnees x et y d'où la dimension 2)

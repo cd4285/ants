@@ -4,6 +4,11 @@ import java.awt.Color;
 import java.util.StringTokenizer;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * 
+ * classe qui gère les paramètres
+ *
+ */
 public class CParametres {
 
 	// l'objet graphique lui meme
@@ -26,7 +31,7 @@ public class CParametres {
 	// si pStr est un nombre : sa valeur est retournée
 	// si pStr est un interval x..y : une valeur au hasard dans [x,y] est
 	// retournée
-	/* private */public float readFloatParameter(String pStr) {
+	public float readFloatParameter(String pStr) {
 		float lMin, lMax, lResult;
 		// System.out.println(" chaine pStr: "+pStr);
 		StringTokenizer lStrTok = new StringTokenizer(pStr, ":");
@@ -54,7 +59,7 @@ public class CParametres {
 	// si pStr est un nombre : sa valeur est retournée
 	// si pStr est un interval x..y : une valeur au hasard dans [x,y] est
 	// retournée
-	/* private */public int readIntParameter(String pStr) {
+	public int readIntParameter(String pStr) {
 		int lMin, lMax, lResult;
 		StringTokenizer lStrTok = new StringTokenizer(pStr, ":");
 		// on lit une premiere valeur
@@ -76,7 +81,7 @@ public class CParametres {
 
 	// =========================================================================
 	// lecture des paramètres de l'applet
-	/* private */public CopyOnWriteArrayList<CFourmi> readParameterFourmis() {
+	public CopyOnWriteArrayList<CFourmi> readParameterFourmis() {
 		String lChaine;
 		int R, G, B;
 		Color lCouleurDeposee, lCouleurSuivie;
