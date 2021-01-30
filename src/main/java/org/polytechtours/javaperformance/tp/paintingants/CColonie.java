@@ -9,17 +9,17 @@ package org.polytechtours.javaperformance.tp.paintingants;
  * the Source Creation and Management node. Right-click the template and choose
  * Open. You can then make changes to the template in the Source Editor.
  */
-import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CColonie implements Runnable {
 
 	private Boolean mContinue = Boolean.TRUE;
 	// vecteur contenant des fourmis
-	private Vector<CFourmi> mColonie;
+	private CopyOnWriteArrayList<CFourmi> mColonie;
 	private PaintingAnts mApplis;
 
 	/** Creates a new instance of CColonie */
-	public CColonie(Vector<CFourmi> pColonie, PaintingAnts pApplis) {
+	public CColonie(CopyOnWriteArrayList<CFourmi> pColonie, PaintingAnts pApplis) {
 		mColonie = pColonie;
 		mApplis = pApplis;
 	}

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -18,7 +18,7 @@ class CColonieTest {
 	private static CPainting mPainting;
 	private static CFourmi fourmi1;
 	private static CFourmi fourmi2;
-	private static Vector<CFourmi> vFourmis;
+	private static CopyOnWriteArrayList<CFourmi> vFourmis;
 	private static CColonie colonie;
 
 	@BeforeAll
@@ -30,7 +30,7 @@ class CColonieTest {
 		fourmi2 = new CFourmi(new Color(127, 127, 127), new Color(0, 0, 0), 0.39f, 0.65f, 0.43f, 0.53f, mPainting, 'o', 0, 0, 4,
 				3, 40, pApplis);
 		
-		vFourmis = new Vector<CFourmi>();
+		vFourmis = new CopyOnWriteArrayList<CFourmi>();
 		vFourmis.add(fourmi1);
 		vFourmis.add(fourmi2);
 		

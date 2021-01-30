@@ -2,14 +2,14 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import java.awt.Color;
 import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CParametres {
 
 	// l'objet graphique lui meme
 	private CPainting mPainting;
 	
-	private Vector<CFourmi> mColonie;
+	private CopyOnWriteArrayList<CFourmi> mColonie;
 	private PaintingAnts pApplis;
 	
 	/******************************************************************************
@@ -18,7 +18,7 @@ public class CParametres {
 	public CParametres(CPainting cpainting, PaintingAnts mApplis) {
 		mPainting = cpainting;
 		pApplis = mApplis;
-		mColonie = new Vector<CFourmi>();
+		mColonie = new CopyOnWriteArrayList<CFourmi>();
 	}
 
 	// =========================================================================
@@ -76,7 +76,7 @@ public class CParametres {
 
 	// =========================================================================
 	// lecture des paramètres de l'applet
-	/* private */public Vector<CFourmi> readParameterFourmis() {
+	/* private */public CopyOnWriteArrayList<CFourmi> readParameterFourmis() {
 		String lChaine;
 		int R, G, B;
 		Color lCouleurDeposee, lCouleurSuivie;
@@ -221,7 +221,7 @@ public class CParametres {
 				// création de la fourmi
 				lFourmi = new CFourmi(lCouleurDeposee, lCouleurSuivie, lProbaTD, lProbaG, lProbaD, lProbaSuivre,
 						mPainting, lTypeDeplacement, lInit_x, lInit_y, lInitDirection, lTaille, lSeuilLuminance, pApplis);
-				mColonie.addElement(lFourmi);
+				mColonie.add(lFourmi);
 				lNbFourmis++;
 			}
 		} else // initialisation aléatoire des fourmis
@@ -281,7 +281,7 @@ public class CParametres {
 				// création et ajout de la fourmi dans la colonie
 				lFourmi = new CFourmi(lTabColor[i], lTabColor[lColor], lProbaTD, lProbaG, lProbaD, lProbaSuivre,
 						mPainting, lTypeDeplacement, lInit_x, lInit_y, lInitDirection, lTaille, lSeuilLuminance, pApplis);
-				mColonie.addElement(lFourmi);
+				mColonie.add(lFourmi);
 			}
 		}
 		// on affiche le nombre de fourmis

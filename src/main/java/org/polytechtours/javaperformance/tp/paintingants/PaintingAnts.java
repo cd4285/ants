@@ -8,8 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.StringTokenizer;
-import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.Timer;
 
@@ -23,7 +22,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	private CPainting mPainting;
 
 	// les fourmis
-	private Vector<CFourmi> mColonie = new Vector<CFourmi>();
+	private CopyOnWriteArrayList<CFourmi> mColonie = new CopyOnWriteArrayList<CFourmi>();
 	private CColonie mColony;
 
 	private Thread mApplis, mThreadColony;

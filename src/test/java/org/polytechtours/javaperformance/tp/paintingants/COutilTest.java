@@ -41,12 +41,12 @@ class COutilTest {
 	
 	@Test
 	public void testTestCouleurEgaliteAvecCouleurSuivie() {
-		assertEquals(true, outil.testCouleur(pCouleurBlanc, fourmi.getmLuminanceCouleurSuivie(), fourmi.getmSeuilLuminance()));
+		assertEquals(true, outil.testCouleur(pCouleurNoir, fourmi.getmLuminanceCouleurSuivie(), fourmi.getmSeuilLuminance()));
 	}
 
 	@Test
 	public void testTestCouleurPasEgaliteAvecCouleurSuivie() {
-		assertEquals(false, outil.testCouleur(pCouleurNoir, fourmi.getmLuminanceCouleurSuivie(), fourmi.getmSeuilLuminance()));
+		assertEquals(false, outil.testCouleur(pCouleurBlanc, fourmi.getmLuminanceCouleurSuivie(), fourmi.getmSeuilLuminance()));
 	}
 	
 	@Test
