@@ -55,7 +55,7 @@ class CPaintingTest {
 		// test couleur de fond
 		for (int i = 0; i != painting.getDimension().width; i++) {
 			for (int j = 0; j != painting.getDimension().height; j++) {
-					assertEquals(new Color(255, 255, 255), painting.getmCouleurs()[i][j]);
+					assertEquals(new Color(255, 255, 255), painting.getmCouleurs().get(i).get(j));
 			}
 		}
 	}
@@ -71,11 +71,11 @@ class CPaintingTest {
 	
 	@Test
 	public void testSetCouleur() {
-		assertEquals(new Color(255, 255, 255), painting.getmCouleurs()[0][0]);
+		assertEquals(new Color(255, 255, 255), painting.getmCouleurs().get(0).get(0));
 		
 		painting.setCouleur(0, 0, new Color(0, 0, 0), 0);
 		
-		assertEquals(new Color(0, 0, 0), painting.getmCouleurs()[0][0]);
+		assertEquals(new Color(0, 0, 0), painting.getmCouleurs().get(0).get(0));
 	}
 
 }

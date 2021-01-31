@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * <p>
@@ -45,7 +46,7 @@ public class CPainting extends Canvas {
 	// tableau des couleurs, il permert de conserver en memoire l'état de chaque
 	// pixel du canvas, ce qui est necessaire au deplacemet des fourmi
 	// il sert aussi pour la fonction paint du Canvas
-	private Color[][] mCouleurs;
+	private CopyOnWriteArrayList<CopyOnWriteArrayList<Color>> mCouleurs;
 	// couleur du fond
 	private Color mCouleurFond = new Color(255, 255, 255);
 	// dimensions de la fenêtre
@@ -77,13 +78,13 @@ public class CPainting extends Canvas {
 
 		// initialisation de la matrice des couleurs de taille les dimensions de la
 		// fenêtre
-		mCouleurs = new Color[mDimension.width][mDimension.height];
-		synchronized (mMutexCouleurs) {
-			for (i = 0; i != mDimension.width; i++) {
-				for (j = 0; j != mDimension.height; j++) {
-					mCouleurs[i][j] = new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue());
-				}
+		mCouleurs = new CopyOnWriteArrayList<CopyOnWriteArrayList<Color>>();
+		for (i = 0; i != mDimension.width; i++) {
+			CopyOnWriteArrayList<Color> list = new CopyOnWriteArrayList<>();
+			for (j = 0; j != mDimension.height; j++) {
+				list.add(new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue()));
 			}
+			mCouleurs.add(list);
 		}
 
 	}
@@ -93,9 +94,7 @@ public class CPainting extends Canvas {
 	 * d'une case
 	 ******************************************************************************/
 	public Color getCouleur(int x, int y) {
-		synchronized (mMutexCouleurs) {
-			return mCouleurs[x][y];
-		}
+		return mCouleurs.get(x).get(y);
 	}
 
 	/******************************************************************************
@@ -131,15 +130,17 @@ public class CPainting extends Canvas {
 		mGraphics = getGraphics();
 		synchronized (mMutexCouleurs) {
 			mGraphics.clearRect(0, 0, mDimension.width, mDimension.height);
-
-			// initialisation de la matrice des couleurs
-
-			for (i = 0; i != mDimension.width; i++) {
-				for (j = 0; j != mDimension.height; j++) {
-					mCouleurs[i][j] = new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue());
-				}
-			}
 		}
+		// initialisation de la matrice des couleurs
+		mCouleurs = new CopyOnWriteArrayList<CopyOnWriteArrayList<Color>>();
+		for (i = 0; i != mDimension.width; i++) {
+			CopyOnWriteArrayList<Color> list = new CopyOnWriteArrayList<>();
+			for (j = 0; j != mDimension.height; j++) {
+				list.add(new Color(mCouleurFond.getRed(), mCouleurFond.getGreen(), mCouleurFond.getBlue()));
+			}
+			mCouleurs.add(list);
+		}
+		
 
 		// initialisation de la matrice de convolution : lissage moyen sur 9
 		// cases
@@ -265,7 +266,7 @@ public class CPainting extends Canvas {
 		synchronized (mMutexCouleurs) {
 			for (i = 0; i < mDimension.width; i++) {
 				for (j = 0; j < mDimension.height; j++) {
-					pGraphics.setColor(mCouleurs[i][j]);
+					pGraphics.setColor(mCouleurs.get(i).get(j));
 					pGraphics.fillRect(i, j, 1, 1);
 				}
 			}
@@ -288,7 +289,7 @@ public class CPainting extends Canvas {
 				mGraphics.fillRect(x, y, 1, 1);
 			}
 
-			mCouleurs[x][y] = c;
+			mCouleurs.get(x).set(y, c);
 
 			// on fait diffuser la couleur :
 			switch (pTaille) {
@@ -305,9 +306,9 @@ public class CPainting extends Canvas {
 							for (l = 0; l < 3; l++) {
 								m = (x + i + k - 2 + mDimension.width) % mDimension.width;
 								n = (y + j + l - 2 + mDimension.height) % mDimension.height;
-								R += CPainting.mMatriceConv9[k][l] * mCouleurs[m][n].getRed();
-								G += CPainting.mMatriceConv9[k][l] * mCouleurs[m][n].getGreen();
-								B += CPainting.mMatriceConv9[k][l] * mCouleurs[m][n].getBlue();
+								R += CPainting.mMatriceConv9[k][l] * mCouleurs.get(m).get(n).getRed();
+								G += CPainting.mMatriceConv9[k][l] * mCouleurs.get(m).get(n).getGreen();
+								B += CPainting.mMatriceConv9[k][l] * mCouleurs.get(m).get(n).getBlue();
 							}
 						}
 						lColor = new Color((int) R, (int) G, (int) B);
@@ -316,7 +317,7 @@ public class CPainting extends Canvas {
 
 						m = (x + i - 1 + mDimension.width) % mDimension.width;
 						n = (y + j - 1 + mDimension.height) % mDimension.height;
-						mCouleurs[m][n] = lColor;
+						mCouleurs.get(m).set(n, lColor);
 						if (!mSuspendu) {
 							mGraphics.fillRect(m, n, 1, 1);
 						}
@@ -333,9 +334,9 @@ public class CPainting extends Canvas {
 							for (l = 0; l < 5; l++) {
 								m = (x + i + k - 4 + mDimension.width) % mDimension.width;
 								n = (y + j + l - 4 + mDimension.height) % mDimension.height;
-								R += CPainting.mMatriceConv25[k][l] * mCouleurs[m][n].getRed();
-								G += CPainting.mMatriceConv25[k][l] * mCouleurs[m][n].getGreen();
-								B += CPainting.mMatriceConv25[k][l] * mCouleurs[m][n].getBlue();
+								R += CPainting.mMatriceConv25[k][l] * mCouleurs.get(m).get(n).getRed();
+								G += CPainting.mMatriceConv25[k][l] * mCouleurs.get(m).get(n).getGreen();
+								B += CPainting.mMatriceConv25[k][l] * mCouleurs.get(m).get(n).getBlue();
 							}
 						}
 						lColor = new Color((int) R, (int) G, (int) B);
@@ -343,7 +344,7 @@ public class CPainting extends Canvas {
 						m = (x + i - 2 + mDimension.width) % mDimension.width;
 						n = (y + j - 2 + mDimension.height) % mDimension.height;
 
-						mCouleurs[m][n] = lColor;
+						mCouleurs.get(m).set(n, lColor);
 						if (!mSuspendu) {
 							mGraphics.fillRect(m, n, 1, 1);
 						}
@@ -361,9 +362,9 @@ public class CPainting extends Canvas {
 							for (l = 0; l < 7; l++) {
 								m = (x + i + k - 6 + mDimension.width) % mDimension.width;
 								n = (y + j + l - 6 + mDimension.height) % mDimension.height;
-								R += CPainting.mMatriceConv49[k][l] * mCouleurs[m][n].getRed();
-								G += CPainting.mMatriceConv49[k][l] * mCouleurs[m][n].getGreen();
-								B += CPainting.mMatriceConv49[k][l] * mCouleurs[m][n].getBlue();
+								R += CPainting.mMatriceConv49[k][l] * mCouleurs.get(m).get(n).getRed();
+								G += CPainting.mMatriceConv49[k][l] * mCouleurs.get(m).get(n).getGreen();
+								B += CPainting.mMatriceConv49[k][l] * mCouleurs.get(m).get(n).getBlue();
 							}
 						}
 						lColor = new Color((int) R, (int) G, (int) B);
@@ -371,7 +372,7 @@ public class CPainting extends Canvas {
 						m = (x + i - 3 + mDimension.width) % mDimension.width;
 						n = (y + j - 3 + mDimension.height) % mDimension.height;
 
-						mCouleurs[m][n] = lColor;
+						mCouleurs.get(m).set(n, lColor);
 						if (!mSuspendu) {
 							mGraphics.fillRect(m, n, 1, 1);
 						}
@@ -402,7 +403,7 @@ public class CPainting extends Canvas {
 		this.mGraphics = mGraphics;
 	}
 
-	public Color[][] getmCouleurs() {
+	public CopyOnWriteArrayList<CopyOnWriteArrayList<Color>> getmCouleurs() {
 		return mCouleurs;
 	}
 

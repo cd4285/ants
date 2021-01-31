@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.swing.Timer;
 
@@ -27,8 +28,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	private Thread mApplis, mThreadColony;
 
 	private Dimension mDimension;
-	private long mCompteur = 0;
-	private Object mMutexCompteur = new Object();
+	private AtomicLong mCompteur = new AtomicLong(0);
 	private boolean mPause = false;
 
 	// tableau rectangulaire de pixels
@@ -36,9 +36,9 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	private Timer fpsTimer;
 
 	/** Fourmis per second :) */
-	private Long fpsCounter = 0L;
+	private AtomicLong fpsCounter = new AtomicLong(0);
 	/** stocke la valeur du compteur lors du dernier timer */
-	private Long lastFps = 0L;
+	private AtomicLong lastFps = new AtomicLong(0);
 	private CParametres parametres;
 
 	/****************************************************************************/
@@ -47,9 +47,7 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	 *
 	 */
 	public void compteur() {
-		synchronized (mMutexCompteur) {
-			mCompteur++;
-		}
+			mCompteur.addAndGet(1);
 	}
 
 	/****************************************************************************/
@@ -99,8 +97,8 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 		return mPause;
 	}
 
-	public synchronized void IncrementFpsCounter() {
-		fpsCounter++;
+	public void IncrementFpsCounter() {
+		fpsCounter.addAndGet(1);
 	}
 
 	/****************************************************************************/
@@ -206,16 +204,16 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 			if (mPause) {
 				lMessage = new StringBuffer("pause");
 			} else {
-				synchronized (this) {
-					lMessage = new StringBuffer("running (").append(lastFps).append(") ");
-				}
+				
+				lMessage = new StringBuffer("running (").append(lastFps).append(") ");
+				
 
-				synchronized (mMutexCompteur) {
-					mCompteur %= 10000;
-					for (i = 0; i < mCompteur / 1000; i++) {
+				
+					mCompteur.set(mCompteur.longValue() % 10000);
+					for (i = 0; i < mCompteur.floatValue() / 1000; i++) {
 						lMessage = lMessage.append(".");
 					}
-				}
+				
 
 			}
 			showStatus(lMessage.toString());
@@ -282,28 +280,28 @@ public class PaintingAnts extends java.applet.Applet implements Runnable {
 	/**
 	 * update Fourmis per second
 	 */
-	public synchronized void updateFPS() {
+	public void updateFPS() {
 		lastFps = fpsCounter;
-		fpsCounter = 0L;
+		fpsCounter = new AtomicLong(0);
 	}
 
-	public long getmCompteur() {
+	public AtomicLong getmCompteur() {
 		return mCompteur;
 	}
 
-	public Long getFpsCounter() {
+	public AtomicLong getFpsCounter() {
 		return fpsCounter;
 	}
 
-	public Long getLastFps() {
+	public AtomicLong getLastFps() {
 		return lastFps;
 	}
 
-	public void setFpsCounter(Long fpsCounter) {
+	public void setFpsCounter(AtomicLong fpsCounter) {
 		this.fpsCounter = fpsCounter;
 	}
 
-	public void setLastFps(Long lastFps) {
+	public void setLastFps(AtomicLong lastFps) {
 		this.lastFps = lastFps;
 	}
 

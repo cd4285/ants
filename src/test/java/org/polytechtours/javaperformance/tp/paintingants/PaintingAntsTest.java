@@ -2,6 +2,8 @@ package org.polytechtours.javaperformance.tp.paintingants;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -43,11 +45,11 @@ class PaintingAntsTest {
 
 	@Test
 	void testCompteur() {
-		assertEquals(0, pApplis.getmCompteur());
+		assertEquals(new AtomicLong(0).get(), pApplis.getmCompteur().get());
 
 		pApplis.compteur();
 
-		assertEquals(1, pApplis.getmCompteur());
+		assertEquals(new AtomicLong(1).get(), pApplis.getmCompteur().get());
 	}
 
 	@Test
@@ -61,11 +63,11 @@ class PaintingAntsTest {
 
 	@Test
 	void testIncrementFpsCounter() {
-		assertEquals(0L, pApplis.getFpsCounter());
+		assertEquals(new AtomicLong(0L).get(), pApplis.getFpsCounter().get());
 
 		pApplis.IncrementFpsCounter();
 
-		assertEquals(1L, pApplis.getFpsCounter());
+		assertEquals(new AtomicLong(1L).get(), pApplis.getFpsCounter().get());
 	}
 
 	@Test
@@ -79,27 +81,27 @@ class PaintingAntsTest {
 
 	@Test
 	void testUpdateFPSLastFps() {		
-		pApplis.setLastFps(4L);
-		pApplis.setFpsCounter(6L);
+		pApplis.setLastFps(new AtomicLong(4L));
+		pApplis.setFpsCounter(new AtomicLong(6L));
 		
-		assertEquals(4L, pApplis.getLastFps());
+		assertEquals(new AtomicLong(4L).get(), pApplis.getLastFps().get());
 		
 		
 		pApplis.updateFPS();
 		
-		assertEquals(6L, pApplis.getLastFps());
+		assertEquals(new AtomicLong(6L).get(), pApplis.getLastFps().get());
 	}
 	
 	@Test
 	void testUpdateFPSFpsCounter() {
-		pApplis.setLastFps(4L);
-		pApplis.setFpsCounter(6L);
+		pApplis.setLastFps(new AtomicLong(4L));
+		pApplis.setFpsCounter(new AtomicLong(6L));
 		
-		assertEquals(6L, pApplis.getFpsCounter());
+		assertEquals(new AtomicLong(6L).get(), pApplis.getFpsCounter().get());
 		
 		pApplis.updateFPS();
 		
-		assertEquals(0L, pApplis.getFpsCounter());
+		assertEquals(new AtomicLong(0L).get(), pApplis.getFpsCounter().get());
 
 	}
 }
